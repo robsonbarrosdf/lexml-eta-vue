@@ -12,17 +12,37 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Instala as dependências
-        run: npm install
+    #   - name: Instala as dependências
+    #     run: npm install
 
-      - name: Build da aplicação
-        run: npm run build
+    #   - name: Build da aplicação
+    #     run: npm run build
 
       # deploy gh-pages
-      - name: deploy to gh-pages
-        uses: s0/git-publish-subdir-action@develop
+    #   - name: deploy to gh-pages
+    #     uses: s0/git-publish-subdir-action@develop
+    #     env:
+    #       REPO: self
+    #       BRANCH: gh-pages
+    #       FOLDER: dist
+    #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: setup git auth
         env:
-          REPO: self
-          BRANCH: gh-pages
-          FOLDER: dist
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          email: 'robsonbarrosdf@gmail.com'
+          username: 'robsonbarrosdf'
+          access_token: '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'
+        run: |
+          git config --global credential.helper store
+          echo "https://${access_token}:x-oauth-basic@github.com" > ~/.git-credentials
+          git config --global user.email $email
+          git config --global user.name $username
+      - name: deploy to gh-pages
+        run: |
+          npm i
+          NODE_ENV=production npm run build
+          cd dist
+          git init
+          git add -A
+          git commit -m "🚀 Deploy id ${GITHUB_RUN_ID}"
+          git push -f "https://github.com/${GITHUB_REPOSITORY}.git" main:gh-pages
