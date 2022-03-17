@@ -37,8 +37,8 @@
                 role="tabpanel"
                 aria-labelledby="visualizacao-tab"
             >
-                <editor-emenda-preview />
-                <!-- <lexml-emenda-comando v-if="emenda" :emenda="emenda"></lexml-emenda-comando> -->
+                <editor-emenda-preview v-if="false" />
+                <lexml-emenda-comando v-if="emenda" :emenda="emenda" />
             </div>
             <div
                 class="tab-pane fade" id="ajuda" role="tabpanel"
@@ -71,7 +71,7 @@ interface Props {
 }
 const props = defineProps<Props>();
 const itensMenu = computed(() => props.itensMenu);
-// const emenda = computed(() => props.emenda);
+const emenda = computed(() => props.emenda);
 
 onMounted(() => document.getElementById('ajuda-tab')?.click());
 
