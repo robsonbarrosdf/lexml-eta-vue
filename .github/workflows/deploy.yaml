@@ -18,7 +18,6 @@ jobs:
       - name: Build da aplicação
         run: npm run build:ghpages
 
-      # deploy gh-pages
       - name: deploy to gh-pages
         uses: s0/git-publish-subdir-action@develop
         env:
